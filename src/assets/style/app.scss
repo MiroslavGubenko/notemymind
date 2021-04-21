@@ -13,19 +13,20 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 95%;
+    width: 100vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 30px 0 30px;
 
     .logo {
+        margin: 30px;
         background-color: var(--app-color);
     }
     a {
         .githublogo {
             width: 45px;
             height: 45px;
+            margin: 30px;
             border-radius: 50%;
             border: 3px solid var(--app-color);
             background-color: var(--app-color);
