@@ -8,7 +8,12 @@
     </div>
     <div class="color_piker">
       <ul v-for="(color, i) in colors" :key="i">
-        <li @click="SetTheme(color)" :style="{ backgroundColor: color }"></li>
+        <li @click="SetNewTheme(color)" :style="{ backgroundColor: color }">
+          <p
+            :class="{ active: current_theme == color }"
+            class="current_theme"
+          ></p>
+        </li>
       </ul>
     </div>
     <div class="container_center">
@@ -31,23 +36,26 @@ export default {
         "#FFA07A",
         "#778899",
       ],
+      current_theme: "",
     };
   },
   mounted() {
-    if (localStorage.getItem("theme")) {
-      document.documentElement.setAttribute(
-        "theme",
-        localStorage.getItem("theme")
-      );
-    } else {
-      console.log(localStorage.getItem("theme"));
-      localStorage.setItem("theme", "#773a9c");
-    }
+    this.SetTheme();
   },
   methods: {
-    SetTheme: function (color) {
+    SetNewTheme: function (color) {
+      this.current_theme = color;
       localStorage.setItem("theme", color);
       document.documentElement.setAttribute("theme", color);
+    },
+    SetTheme: function () {
+      this.current_theme = localStorage.getItem("theme");
+      if (this.current_theme) {
+        document.documentElement.setAttribute("theme", this.current_theme);
+      } else {
+        this.current_theme = "#773a9c";
+        localStorage.setItem("theme", this.current_theme);
+      }
     },
   },
 };
