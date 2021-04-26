@@ -24,9 +24,7 @@ export default {
   components: { Note },
   props: ["notes"],
   data() {
-    return {
-      id: "",
-    };
+    return {};
   },
   methods: {
     DeleteNote: function (i) {

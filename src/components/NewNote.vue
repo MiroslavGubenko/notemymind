@@ -9,10 +9,10 @@
       placeholder="Название заметки"
       v-model="Nname"
     />
-    <p>Включить редактор Markdown</p>
     <label class="switch">
       <input type="checkbox" v-model="show_markdown" checked />
     </label>
+    <p>Включить редактор Markdown</p>
     <button class="material-icons close btn" @click="$emit('close')">
       close
     </button>
@@ -20,8 +20,6 @@
   <div class="redactor_window">
     <div class="redactor">
       <textarea
-        cols="80"
-        wrap="hard"
         :maxlength="300"
         placeholder="Текст заметки...."
         v-model="Nnote"
@@ -43,6 +41,12 @@
       <button class="material-icons save btn">save</button>
     </div>
   </div>
+  <div class="modal_window" v-if="save_error">
+    <div class="modal_body">
+      <h1>Название заметки или заметка пустая!</h1>
+      <button @click="save_error = false">ОК</button>
+    </div>
+  </div>
 </template>
 <script>
 var MarkdownParser = require("marked");
@@ -55,25 +59,30 @@ export default {
   emits: ["close", "push-new-note"],
   data() {
     return {
-      typeOf: typeof this.data_note,
-      Nname: this.note.name,
+      Nname: this.note.name || "",
       Ndate: this.note.date,
       Nnote: this.note.note || "",
       show_markdown: true,
+      save_error: false,
     };
   },
   mounted() {
     this.Ndate = new Date().toLocaleString();
+    setInterval(() => (this.Ndate = new Date().toLocaleString()), 1000);
   },
   methods: {
     SaveNewNote: function () {
-      let new_note = {
-        name: this.Nname,
-        date: this.Ndate,
-        note: this.Nnote,
-      };
-      this.$emit("push-new-note", new_note);
-      this.$emit("close");
+      if (this.Nname === "" || this.Nnote === "") {
+        this.save_error = true;
+      } else {
+        let new_note = {
+          name: this.Nname,
+          date: this.Ndate,
+          note: this.Nnote,
+        };
+        this.$emit("push-new-note", new_note);
+        this.$emit("close");
+      }
     },
   },
   computed: {
@@ -109,6 +118,7 @@ export default {
     font-size: 30px;
     margin: 10px 50px 10px 0;
     padding-left: 25px;
+    user-select: text;
     color: var(--app-text-color);
     caret-color: var(--app-color);
   }
@@ -134,8 +144,9 @@ export default {
   }
   .redactor {
     flex-direction: column;
-    flex-grow: 5;
+    flex-grow: 4;
     textarea {
+      width: 80%;
       border: 1px solid var(--app-text-color);
       white-space: pre-wrap;
       user-select: text;
@@ -163,18 +174,17 @@ export default {
   .markdown {
     display: inline-block;
     word-wrap: break-word;
-    flex-grow: 3;
-    height: 90%;
-    width: 300px;
+    flex-grow: 4;
+    height: 80%;
+    max-width: 500px;
     flex-wrap: wrap;
     padding: 20px;
-    // color: var(--app-text-color);
     border: 1px solid var(--app-text-color);
-    // background-color: var(--app-second-color);
     margin-right: 20px;
     user-select: text;
   }
   .toolbar {
+    width: 20px;
     flex-grow: 1;
     cursor: pointer;
 
@@ -191,7 +201,40 @@ export default {
   background: var(--app-second-color);
   color: var(--app-text-color);
   font-size: 30px;
-  border-radius: 50%;
   cursor: pointer;
+}
+.modal_window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.719);
+
+  .modal_body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(149, 0, 0);
+    color: white;
+    padding: 20px;
+
+    button {
+      margin: 20px;
+      outline: none;
+      border: none;
+      height: 44px;
+      width: 100px;
+      background: var(--app-second-color);
+      color: var(--app-text-color);
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
 }
 </style>
