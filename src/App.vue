@@ -2,7 +2,7 @@
   <div class="root_container">
     <div class="top_bar">
       <img class="logo" src="./assets/logo.svg" alt="logo" />
-      <a href="#"
+      <a href="https://github.com/MiroslavGubenko/notemymind" target="_blank"
         ><img class="githublogo" src="./assets/github_logo.png" alt="gitlogo" />
       </a>
       <div class="color_piker">
@@ -66,7 +66,6 @@ export default {
   mounted() {
     this.SetTheme();
     this.GetNotes();
-    console.log(this.notes);
   },
   methods: {
     GetNotes: function () {
@@ -99,13 +98,18 @@ export default {
     },
     EditNote: function (i) {
       this.id_edit = i;
+      console.log("edit", this.id_edit);
       this.edit_note = this.notes[i];
       this.add_new = true;
     },
     PushNewNote: function (new_note) {
-      this.notes.splice(this.id_edit, 1);
+      console.log("save", this.id_edit);
+      if (this.id_edit !== "") {
+        this.notes.splice(this.id_edit, 1);
+      }
       this.notes.push(new_note);
       this.SaveNotesInLocalstore(this.notes);
+      this.id_edit = "";
     },
   },
 };
