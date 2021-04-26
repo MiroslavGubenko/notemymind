@@ -1,14 +1,19 @@
 <template>
   <div class="input_bar">
-    <p class="date">
-      <span class="material-icons"> schedule </span>{{ Ndate }}
-    </p>
-    <input
-      class="input_name"
-      type="text"
-      placeholder="Название заметки"
-      v-model="Nname"
-    />
+    <span class="material-icons date">
+      schedule
+      <p>{{ Ndate }}</p>
+    </span>
+    <div class="input_box">
+      <input
+        class="input_name"
+        type="text"
+        placeholder="Название заметки"
+        v-model="Nname"
+        :maxlength="15"
+      />
+      <p class="length_name">{{ LengthName }}/15</p>
+    </div>
     <label class="switch">
       <input type="checkbox" v-model="show_markdown" checked />
     </label>
@@ -60,14 +65,13 @@ export default {
   data() {
     return {
       Nname: this.note.name || "",
-      Ndate: this.note.date,
+      Ndate: this.note.date || (this.Ndate = new Date().toLocaleString()),
       Nnote: this.note.note || "",
       show_markdown: true,
       save_error: false,
     };
   },
   mounted() {
-    this.Ndate = new Date().toLocaleString();
     setInterval(() => (this.Ndate = new Date().toLocaleString()), 1000);
   },
   methods: {
@@ -92,6 +96,9 @@ export default {
     LengthText: function () {
       return this.Nnote.length;
     },
+    LengthName: function () {
+      return this.Nname.length;
+    },
   },
 };
 </script>
@@ -108,19 +115,42 @@ export default {
   justify-content: center;
   user-select: text;
   .date {
-    font-size: 20px;
-    letter-spacing: 0.5px;
-    margin: 0px 50px;
-  }
-  .input_name {
-    width: 560px;
-    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 30px;
-    margin: 10px 50px 10px 0;
-    padding-left: 25px;
-    user-select: text;
-    color: var(--app-text-color);
-    caret-color: var(--app-color);
+    letter-spacing: 0.5px;
+  }
+  .input_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px 0 20px;
+
+    .input_name {
+      background-color: var(--app-second-color);
+      border: none;
+      border-bottom: 2px solid var(--app-text-color);
+      outline: none;
+      width: 350px;
+      height: 60px;
+      font-size: 30px;
+      margin: 10px 0px 10px 0;
+      padding-left: 25px;
+      user-select: text;
+      color: var(--app-text-color);
+      caret-color: var(--app-color);
+
+      &:focus {
+        outline: none;
+      }
+    }
+    .length_name {
+      align-self: flex-end;
+      width: 30px;
+      font-size: 20px;
+    }
   }
   p {
     font-size: 20px;
