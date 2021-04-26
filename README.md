@@ -20,6 +20,9 @@ npm install
 
 ### Dev-режим
 
+
 ```
 npm run serve
 ```
+
+![5124344(1)](https://user-images.githubusercontent.com/38442573/116129981-618ef080-a6d3-11eb-9fd4-82ef7723ed2b.gif)
