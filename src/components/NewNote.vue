@@ -25,7 +25,7 @@
   <div class="redactor_window">
     <div class="redactor">
       <textarea
-        :maxlength="300"
+        :maxlength="666"
         placeholder="Текст заметки...."
         v-model="Nnote"
         @input="Update"
@@ -34,10 +34,10 @@
       <p
         class="length"
         :style="
-          LengthText == 300 ? 'color:red;' : 'color:var(--app-text-color);'
+          LengthText == 666 ? 'color:red;' : 'color:var(--app-text-color);'
         "
       >
-        Допустимая длинна заметки 300 символов . Текущий размер
+        Допустимая длинна заметки 666 символов . Текущий размер
         {{ LengthText }} символов
       </p>
     </div>
@@ -250,7 +250,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(149, 0, 0);
+    background-color: var(--app-color);
+    border-radius: 15px;
     color: white;
     padding: 20px;
 

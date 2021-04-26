@@ -18,7 +18,6 @@ export default {
   props: {
     date: String,
     name: String,
-    id: Number,
   },
   emits: ["index-note-delete", "index-note-edit"],
   data() {

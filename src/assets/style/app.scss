@@ -10,7 +10,6 @@
     top: 0;
     left: 0;
     width: 100vw;
-    min-width: 756px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -22,6 +21,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: var(--app-second-color);
+    border-bottom: 5px solid var(--app-color);
 
     .logo {
         height: 100px;

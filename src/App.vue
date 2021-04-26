@@ -60,11 +60,13 @@ export default {
       current_theme: "",
       notes: [],
       edit_note: { name: "", date: "", note: "" },
+      id_edit: "",
     };
   },
   mounted() {
     this.SetTheme();
     this.GetNotes();
+    console.log(this.notes);
   },
   methods: {
     GetNotes: function () {
@@ -96,11 +98,12 @@ export default {
       this.SaveNotesInLocalstore(this.notes);
     },
     EditNote: function (i) {
+      this.id_edit = i;
       this.edit_note = this.notes[i];
-      this.add_new = !this.add_new;
-      this.notes.splice(i, 1);
+      this.add_new = true;
     },
     PushNewNote: function (new_note) {
+      this.notes.splice(this.id_edit, 1);
       this.notes.push(new_note);
       this.SaveNotesInLocalstore(this.notes);
     },

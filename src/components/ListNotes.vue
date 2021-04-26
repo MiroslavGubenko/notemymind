@@ -39,8 +39,6 @@ export default {
 
 <style lang="scss" scope>
 .container_list {
-  max-width: 1000px;
-  width: 1000px;
   overflow: auto;
   display: flex;
   flex-direction: row;
@@ -48,6 +46,7 @@ export default {
   color: var(--app-text-color);
   margin-bottom: 50px;
   flex-shrink: 5;
+  justify-content: center;
 
   scrollbar-color: var(--app-color) var(--app-text-color);
   scrollbar-width: thin;
