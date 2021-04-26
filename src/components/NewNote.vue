@@ -28,7 +28,15 @@
         @input="Update"
         @keyup.enter="AddEnter"
       />
-      <p class="lenth">Маскимум символов {{ 300 - LengthText }}</p>
+      <p
+        class="length"
+        :style="
+          LengthText == 300 ? 'color:red;' : 'color:var(--app-text-color);'
+        "
+      >
+        Допустимая длинна заметки 300 символов . Текущий размер
+        {{ LengthText }} символов
+      </p>
     </div>
     <div v-if="show_markdown" class="markdown" v-html="Markdown"></div>
     <div class="toolbar" @click="SaveNewNote">
@@ -128,6 +136,7 @@ export default {
     flex-direction: column;
     flex-grow: 5;
     textarea {
+      border: 1px solid var(--app-text-color);
       white-space: pre-wrap;
       user-select: text;
       height: 80%;
@@ -146,13 +155,14 @@ export default {
         scrollbar-color: var(--app-color) var(--app-text-color);
         scrollbar-width: thin;
       }
-      .lenth {
+      .length {
         align-self: flex-end;
       }
     }
   }
   .markdown {
     display: inline-block;
+    word-wrap: break-word;
     flex-grow: 3;
     height: 90%;
     width: 300px;
