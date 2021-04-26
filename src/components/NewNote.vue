@@ -1,0 +1,187 @@
+<template>
+  <div class="input_bar">
+    <p class="date">
+      <span class="material-icons"> schedule </span>{{ Ndate }}
+    </p>
+    <input
+      class="input_name"
+      type="text"
+      placeholder="Название заметки"
+      v-model="Nname"
+    />
+    <p>Включить редактор Markdown</p>
+    <label class="switch">
+      <input type="checkbox" v-model="show_markdown" checked />
+    </label>
+    <button class="material-icons close btn" @click="$emit('close')">
+      close
+    </button>
+  </div>
+  <div class="redactor_window">
+    <div class="redactor">
+      <textarea
+        cols="80"
+        wrap="hard"
+        :maxlength="300"
+        placeholder="Текст заметки...."
+        v-model="Nnote"
+        @input="Update"
+        @keyup.enter="AddEnter"
+      />
+      <p class="lenth">Маскимум символов {{ 300 - LengthText }}</p>
+    </div>
+    <div v-if="show_markdown" class="markdown" v-html="Markdown"></div>
+    <div class="toolbar" @click="SaveNewNote">
+      <button class="material-icons save btn">save</button>
+    </div>
+  </div>
+</template>
+<script>
+var MarkdownParser = require("marked");
+export default {
+  props: {
+    note: {
+      type: Object,
+    },
+  },
+  emits: ["close", "push-new-note"],
+  data() {
+    return {
+      typeOf: typeof this.data_note,
+      Nname: this.note.name,
+      Ndate: this.note.date,
+      Nnote: this.note.note || "",
+      show_markdown: true,
+    };
+  },
+  mounted() {
+    this.Ndate = new Date().toLocaleString();
+  },
+  methods: {
+    SaveNewNote: function () {
+      let new_note = {
+        name: this.Nname,
+        date: this.Ndate,
+        note: this.Nnote,
+      };
+      this.$emit("push-new-note", new_note);
+      this.$emit("close");
+    },
+  },
+  computed: {
+    Markdown: function () {
+      return MarkdownParser(this.Nnote);
+    },
+    LengthText: function () {
+      return this.Nnote.length;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.input_bar {
+  width: 100%;
+  height: 80px;
+  background-color: var(--app-second-color);
+  color: var(--app-text-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: text;
+  .date {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    margin: 0px 50px;
+  }
+  .input_name {
+    width: 560px;
+    height: 60px;
+    font-size: 30px;
+    margin: 10px 50px 10px 0;
+    padding-left: 25px;
+    color: var(--app-text-color);
+    caret-color: var(--app-color);
+  }
+  p {
+    font-size: 20px;
+    margin: 10px;
+  }
+}
+.redactor_window {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+
+  div {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .redactor {
+    flex-direction: column;
+    flex-grow: 5;
+    textarea {
+      white-space: pre-wrap;
+      user-select: text;
+      height: 80%;
+      padding: 8px 0 0 13px;
+      color: var(--app-text-color);
+
+      caret-color: var(--app-color);
+      font-weight: 400;
+      font-size: 20px;
+      resize: none;
+
+      scrollbar-color: var(--app-color) var(--app-text-color);
+      scrollbar-width: thin;
+
+      &::-webkit-scrollbar {
+        scrollbar-color: var(--app-color) var(--app-text-color);
+        scrollbar-width: thin;
+      }
+      .lenth {
+        align-self: flex-end;
+      }
+    }
+  }
+  .markdown {
+    display: inline-block;
+    flex-grow: 3;
+    height: 90%;
+    width: 300px;
+    flex-wrap: wrap;
+    padding: 20px;
+    // color: var(--app-text-color);
+    border: 1px solid var(--app-text-color);
+    // background-color: var(--app-second-color);
+    margin-right: 20px;
+    user-select: text;
+  }
+  .toolbar {
+    flex-grow: 1;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--app-color);
+    }
+  }
+}
+.btn {
+  outline: none;
+  border: none;
+  height: 44px;
+  width: 44px;
+  background: var(--app-second-color);
+  color: var(--app-text-color);
+  font-size: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+</style>

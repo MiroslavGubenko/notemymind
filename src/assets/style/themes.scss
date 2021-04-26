@@ -1,18 +1,31 @@
 :root {
-    --app-color: #773a9c;
+    --app-color: #4c0464;
+    --app-second-color:#eae1fb;
+    --app-text-color:#573280;
 }
-[theme="#3a619c"] {
-    --app-color: #3a619c;
+[theme="#3a61ca"] {
+    --app-color: #3a61ca;
+    --app-second-color: #ddf1fa;
+    --app-text-color: #449DD1;
 }
-[theme="#9c3a3a"] {
-    --app-color: #9c3a3a;
+[theme="#a85279"] {
+    --app-color: #a85279;
+    --app-second-color: #f5dfdf;
+    --app-text-color:#E16F7C;
 }
 [theme="#3a9c85"] {
     --app-color: #3a9c85;
+    --app-second-color:#b8ffca;
+    --app-text-color: #126652;
 }
-[theme="#FFA07A"] {
-    --app-color: #ffa07a;
+[theme="#e7a129"] {
+    --app-color: #e7a129;
+    --app-second-color:#f5e5c4;
+    --app-text-color: #b88123;
+
 }
-[theme="#778899"] {
-    --app-color: #778899;
+[theme="#424642"] {
+    --app-color: #424642;
+    --app-second-color:#dadada;
+    --app-text-color: #536162;
 }

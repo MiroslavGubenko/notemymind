@@ -5,38 +5,61 @@
       <a href="#"
         ><img class="githublogo" src="./assets/github_logo.png" alt="gitlogo" />
       </a>
+      <div class="color_piker">
+        <ul v-for="(color, i) in colors" :key="i">
+          <li @click="SetNewTheme(color)" :style="{ backgroundColor: color }">
+            <p
+              :class="{ active: current_theme == color }"
+              class="current_theme"
+            ></p>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="color_piker">
-      <ul v-for="(color, i) in colors" :key="i">
-        <li @click="SetNewTheme(color)" :style="{ backgroundColor: color }">
-          <p
-            :class="{ active: current_theme == color }"
-            class="current_theme"
-          ></p>
-        </li>
-      </ul>
-    </div>
-    <div class="container_center">
-      <h1>Список заметок пуст</h1>
-      <button class="add_note">Добавить заметку</button>
-    </div>
+
+    <list-notes
+      @note-to-edit="EditNote"
+      @note-to-delete="DeleteNote"
+      :notes="notes"
+      v-if="!add_new"
+    />
+
+    <button
+      @click="(add_new = !add_new), (edit_note = {})"
+      v-if="!add_new"
+      class="add_note_btn"
+    >
+      <p>Добавить заметку</p>
+    </button>
+
+    <new-note
+      v-if="add_new"
+      :note="edit_note"
+      @close="add_new = !add_new"
+      @push-new-note="PushNewNote"
+    />
   </div>
 </template>
-
 <script>
+import ListNotes from "./components/ListNotes.vue";
+import NewNote from "./components/NewNote.vue";
 export default {
   name: "App",
+  components: { ListNotes, NewNote },
   data() {
     return {
       colors: [
-        "#773a9c",
-        "#3a619c",
-        "#9c3a3a",
+        "#4c0464",
+        "#3a61ca",
+        "#a85279",
         "#3a9c85",
-        "#FFA07A",
-        "#778899",
+        "#e7a129",
+        "#424642",
       ],
+      add_new: false,
       current_theme: "",
+      notes: [],
+      edit_note: { name: "", date: "", note: "" },
     };
   },
   mounted() {
@@ -56,6 +79,18 @@ export default {
         this.current_theme = "#773a9c";
         localStorage.setItem("theme", this.current_theme);
       }
+    },
+    DeleteNote: function (i) {
+      this.notes.splice(i, 1);
+    },
+    EditNote: function (i) {
+      this.edit_note = this.notes[i];
+      this.add_new = !this.add_new;
+      //this.edit_note = {};
+      this.notes.splice(i, 1);
+    },
+    PushNewNote: function (new_note) {
+      this.notes.push(new_note);
     },
   },
 };
