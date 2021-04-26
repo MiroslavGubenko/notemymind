@@ -64,8 +64,19 @@ export default {
   },
   mounted() {
     this.SetTheme();
+    this.GetNotes();
   },
   methods: {
+    GetNotes: function () {
+      let notes = localStorage.getItem("notes");
+      if (notes) {
+        this.notes = JSON.parse(notes);
+      }
+    },
+    SaveNotesInLocalstore: function (note) {
+      localStorage.removeItem("notes");
+      localStorage.setItem("notes", JSON.stringify(note));
+    },
     SetNewTheme: function (color) {
       this.current_theme = color;
       localStorage.setItem("theme", color);
@@ -82,15 +93,16 @@ export default {
     },
     DeleteNote: function (i) {
       this.notes.splice(i, 1);
+      this.SaveNotesInLocalstore(this.notes);
     },
     EditNote: function (i) {
       this.edit_note = this.notes[i];
       this.add_new = !this.add_new;
-      //this.edit_note = {};
       this.notes.splice(i, 1);
     },
     PushNewNote: function (new_note) {
       this.notes.push(new_note);
+      this.SaveNotesInLocalstore(this.notes);
     },
   },
 };
