@@ -98,12 +98,10 @@ export default {
     },
     EditNote: function (i) {
       this.id_edit = i;
-      console.log("edit", this.id_edit);
       this.edit_note = this.notes[i];
       this.add_new = true;
     },
     PushNewNote: function (new_note) {
-      console.log("save", this.id_edit);
       if (this.id_edit !== "") {
         this.notes.splice(this.id_edit, 1);
       }
