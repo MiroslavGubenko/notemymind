@@ -9,7 +9,6 @@
         v-for="(note, i) in notes"
         :date="note.date"
         :name="note.name"
-        :id="i"
         :key="i"
         @index-note-delete="DeleteNote(i)"
         @index-note-edit="EditNote(i)"

@@ -28,7 +28,6 @@
         :maxlength="666"
         placeholder="Текст заметки...."
         v-model="Nnote"
-        @input="Update"
         @keyup.enter="AddEnter"
       />
       <p
