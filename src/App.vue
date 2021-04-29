@@ -57,14 +57,14 @@ export default {
         "#424642",
       ],
       add_new: false,
-      current_theme: "",
+      current_theme: "#4c0464",
       notes: [],
       edit_note: { name: "", date: "", note: "" },
       id_edit: "",
     };
   },
   mounted() {
-    this.SetTheme();
+    this.SetThemeInFirstStart();
     this.GetNotes();
   },
   methods: {
@@ -83,12 +83,12 @@ export default {
       localStorage.setItem("theme", color);
       document.documentElement.setAttribute("theme", color);
     },
-    SetTheme: function () {
+    SetThemeInFirstStart: function () {
       this.current_theme = localStorage.getItem("theme");
       if (this.current_theme) {
         document.documentElement.setAttribute("theme", this.current_theme);
       } else {
-        this.current_theme = "#773a9c";
+        this.current_theme = "#4c0464";
         localStorage.setItem("theme", this.current_theme);
       }
     },
