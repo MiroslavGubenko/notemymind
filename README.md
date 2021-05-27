@@ -26,7 +26,3 @@ npm install
 ```
 npm run serve
 ```
-
-```
-[CodePen](https://codepen.io/morkamee/project/editor/ArGqyp)
-```
